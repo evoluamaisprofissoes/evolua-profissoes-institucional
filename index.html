@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Evolua+ Profissões – Educação que Transforma</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;500;600;700;800;900&family=Barlow+Condensed:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+:root{
+  --roxo:#8B2FC9;--roxo-neon:#A855F7;--roxo-glow:rgba(168,85,247,.35);--roxo-dark:#3B0764;
+  --laranja:#F97316;--laranja-neon:#FB923C;--ciano:#06B6D4;--ciano-neon:#22D3EE;
+  --amarelo:#EAB308;--pink:#EC4899;--verde:#10B981;
+  --preto:#05050A;--preto2:#0C0C14;--card:#0F0F1A;--card2:#13131F;
+  --border:rgba(168,85,247,.18);--border2:rgba(168,85,247,.35);
+  --txt:#94A3B8;--txt2:#CBD5E1;--branco:#F8FAFC;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Barlow',sans-serif;background:var(--preto);color:var(--branco);overflow-x:hidden}
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:var(--preto2)}::-webkit-scrollbar-thumb{background:var(--roxo);border-radius:3px}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;height:68px;display:flex;align-items:center;justify-content:space-between;padding:0 3rem;background:rgba(5,5,10,.85);backdrop-filter:blur(24px) saturate(180%);border-bottom:1px solid var(--border)}
+.nav-logo{display:flex;align-items:center;gap:.6rem;text-decoration:none}
+.nav-logo img{height:44px;filter:drop-shadow(0 0 12px var(--roxo-glow))}
+.nav-logo-text{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;letter-spacing:.08em;color:var(--branco);line-height:1}
+.nav-logo-text span{color:var(--roxo-neon)}
+.nav-links{display:flex;align-items:center;gap:2.5rem;list-style:none}
+.nav-links a{text-decoration:none;color:var(--txt2);font-family:'Barlow Condensed',sans-serif;font-size:.95rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;transition:color .2s;position:relative}
+.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:2px;background:var(--roxo-neon);transition:width .3s;border-radius:2px}
+.nav-links a:hover{color:var(--branco)}.nav-links a:hover::after{width:100%}
+.nav-cta{background:linear-gradient(135deg,var(--roxo),var(--roxo-neon))!important;color:var(--branco)!important;padding:.5rem 1.4rem!important;border-radius:4px!important;box-shadow:0 0 24px var(--roxo-glow)!important;transition:box-shadow .3s,transform .2s!important}
+.nav-cta::after{display:none!important}.nav-cta:hover{box-shadow:0 0 40px var(--roxo-glow)!important;transform:translateY(-1px)!important}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer}
+.hamburger span{display:block;width:24px;height:2px;background:var(--branco);border-radius:2px;transition:.3s}
+
+/* HERO */
+.hero{position:relative;height:100vh;min-height:640px;margin-top:68px;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 70% 40%,rgba(139,47,201,.45) 0%,transparent 65%),radial-gradient(ellipse 50% 40% at 15% 80%,rgba(249,115,22,.15) 0%,transparent 55%),radial-gradient(ellipse 60% 50% at 85% 10%,rgba(6,182,212,.1) 0%,transparent 60%),var(--preto2)}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(168,85,247,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(168,85,247,.06) 1px,transparent 1px);background-size:60px 60px;mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 30%,transparent 100%)}
+.hero-inner{position:relative;z-index:2;height:100%;max-width:1280px;margin:0 auto;padding:0 3rem;display:flex;align-items:center}
+.slides-wrap{position:relative;width:100%;overflow:hidden}
+.slides-track{display:flex;transition:transform .75s cubic-bezier(.77,0,.18,1)}
+.slide{min-width:100%;padding:1rem 0;position:relative}
+
+.slide-eyebrow{display:inline-flex;align-items:center;gap:.5rem;font-family:'Barlow Condensed',sans-serif;font-size:.8rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--ciano-neon);margin-bottom:1.5rem;opacity:0;transform:translateX(-20px);transition:opacity .5s .1s,transform .5s .1s}
+.slide-eyebrow::before{content:'';display:block;width:32px;height:1px;background:var(--ciano-neon);box-shadow:0 0 6px var(--ciano-neon)}
+.slide.active .slide-eyebrow{opacity:1;transform:translateX(0)}
+.slide-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(3.5rem,7vw,6.5rem);line-height:.95;letter-spacing:.02em;margin-bottom:1.75rem;max-width:760px;opacity:0;transform:translateY(30px);transition:opacity .6s .25s,transform .6s .25s}
+.slide.active .slide-title{opacity:1;transform:translateY(0)}
+.line-roxo{color:var(--roxo-neon);text-shadow:0 0 40px var(--roxo-glow),0 0 80px var(--roxo-glow)}
+.line-laranja{color:var(--laranja-neon);text-shadow:0 0 40px rgba(249,115,22,.4)}
+.line-ciano{color:var(--ciano-neon);text-shadow:0 0 40px rgba(6,182,212,.4)}
+.slide-desc{font-size:1.1rem;font-weight:500;color:var(--txt2);max-width:520px;line-height:1.65;margin-bottom:2.5rem;opacity:0;transform:translateY(20px);transition:opacity .5s .45s,transform .5s .45s}
+.slide.active .slide-desc{opacity:1;transform:translateY(0)}
+.slide-actions{display:flex;gap:1rem;flex-wrap:wrap;opacity:0;transform:translateY(20px);transition:opacity .5s .6s,transform .5s .6s}
+.slide.active .slide-actions{opacity:1;transform:translateY(0)}
+.slide-num{position:absolute;right:3rem;bottom:2rem;font-family:'Bebas Neue',sans-serif;font-size:12rem;line-height:1;color:rgba(168,85,247,.06);pointer-events:none;user-select:none;letter-spacing:.05em}
+
+.btn{display:inline-flex;align-items:center;gap:.55rem;font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;padding:.8rem 2rem;border-radius:4px;border:none;cursor:pointer;transition:all .25s}
+.btn-roxo{background:linear-gradient(135deg,var(--roxo),var(--roxo-neon));color:var(--branco);box-shadow:0 0 30px var(--roxo-glow),inset 0 1px 0 rgba(255,255,255,.15)}
+.btn-roxo:hover{transform:translateY(-2px);box-shadow:0 0 50px var(--roxo-glow),inset 0 1px 0 rgba(255,255,255,.2)}
+.btn-outline{background:transparent;color:var(--branco);border:1.5px solid rgba(255,255,255,.25)}
+.btn-outline:hover{border-color:var(--roxo-neon);color:var(--roxo-neon)}
+.btn-wa{background:#25D366;color:var(--branco);box-shadow:0 0 30px rgba(37,211,102,.35)}
+.btn-wa:hover{transform:translateY(-2px);box-shadow:0 0 50px rgba(37,211,102,.55)}
+
+.hero-nav{position:absolute;bottom:2.5rem;left:3rem;display:flex;align-items:center;gap:1.5rem;z-index:10}
+.hero-dots{display:flex;gap:.5rem}
+.hdot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.25);border:none;cursor:pointer;transition:.3s;padding:0}
+.hdot.active{background:var(--roxo-neon);width:24px;border-radius:3px;box-shadow:0 0 10px var(--roxo-neon)}
+.hero-arrows{display:flex;gap:.5rem}
+.harrow{width:40px;height:40px;border-radius:4px;background:rgba(168,85,247,.12);border:1px solid var(--border2);color:var(--branco);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:.85rem;transition:.2s}
+.harrow:hover{background:var(--roxo);box-shadow:0 0 20px var(--roxo-glow)}
+
+/* TICKER */
+.ticker{background:linear-gradient(90deg,var(--roxo-dark),var(--roxo),var(--roxo-dark));padding:.7rem 0;overflow:hidden;position:relative}
+.ticker::before,.ticker::after{content:'';position:absolute;top:0;bottom:0;width:80px;z-index:2}
+.ticker::before{left:0;background:linear-gradient(90deg,var(--roxo-dark),transparent)}
+.ticker::after{right:0;background:linear-gradient(-90deg,var(--roxo-dark),transparent)}
+.ticker-track{display:flex;white-space:nowrap;animation:ticker 30s linear infinite}
+@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.ticker-item{display:inline-flex;align-items:center;gap:.75rem;font-family:'Barlow Condensed',sans-serif;font-size:.9rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.9);padding:0 2.5rem}
+.ticker-dot{width:5px;height:5px;border-radius:50%;background:var(--amarelo);flex-shrink:0}
+
+/* STATS */
+.stats-bar{background:var(--preto2);border-bottom:1px solid var(--border);padding:2.5rem 3rem}
+.stats-inner{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr);gap:2rem}
+.stat-card{text-align:center;padding:1.5rem;border-right:1px solid var(--border);position:relative}
+.stat-card:last-child{border:none}
+.stat-card::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:32px;height:2px;background:var(--roxo-neon);box-shadow:0 0 10px var(--roxo-neon)}
+.stat-val{font-family:'Bebas Neue',sans-serif;font-size:2.8rem;line-height:1;color:var(--branco);letter-spacing:.02em;margin:0 0 .3rem}
+.stat-lbl{font-family:'Barlow Condensed',sans-serif;font-size:.78rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--txt)}
+
+/* SECTIONS */
+section{padding:6rem 3rem}
+.container{max-width:1280px;margin:0 auto}
+.eyebrow{display:inline-flex;align-items:center;gap:.6rem;font-family:'Barlow Condensed',sans-serif;font-size:.78rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--roxo-neon);margin-bottom:.75rem}
+.eyebrow::before{content:'';width:28px;height:1px;background:var(--roxo-neon);box-shadow:0 0 8px var(--roxo-neon)}
+.sec-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.5rem,5vw,4rem);line-height:.95;letter-spacing:.02em;margin-bottom:1rem}
+.sec-title span{color:var(--roxo-neon);text-shadow:0 0 30px var(--roxo-glow)}
+.sec-sub{color:var(--txt);font-size:1rem;line-height:1.7;max-width:540px}
+
+/* SOBRE */
+#sobre{background:var(--preto2);border-top:1px solid var(--border)}
+.sobre-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
+.mascote-wrap{position:relative;display:flex;justify-content:center;align-items:center;flex-direction:column;gap:1.5rem}
+.mascote-ring{position:absolute;width:340px;height:340px;border-radius:50%;border:1px solid rgba(168,85,247,.2);animation:ring-spin 20s linear infinite}
+.mascote-ring-2{width:280px;height:280px;border:1px solid rgba(168,85,247,.12);animation:ring-spin 15s linear infinite reverse}
+@keyframes ring-spin{to{transform:rotate(360deg)}}
+.mascote-glow{position:absolute;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,rgba(139,47,201,.5),transparent 70%);animation:glow-pulse 3s ease-in-out infinite}
+@keyframes glow-pulse{0%,100%{transform:scale(1);opacity:.7}50%{transform:scale(1.1);opacity:1}}
+.mascote-img{width:300px;position:relative;z-index:2;filter:drop-shadow(0 0 40px rgba(139,47,201,.7));animation:mascote-float 5s ease-in-out infinite}
+@keyframes mascote-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-18px)}}
+.sobre-pills{display:flex;flex-wrap:wrap;gap:.6rem;justify-content:center;position:relative;z-index:3}
+.pill{font-family:'Barlow Condensed',sans-serif;font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--txt2);background:rgba(168,85,247,.08);border:1px solid var(--border);padding:.35rem .9rem;border-radius:3px}
+.sobre-body p{color:var(--txt2);line-height:1.75;font-size:.975rem;margin-bottom:1.1rem;font-weight:500}
+.sobre-body strong{color:var(--branco);font-weight:700}
+.sobre-nums{display:grid;grid-template-columns:1fr 1fr;gap:1px;margin-top:2.5rem;border:1px solid var(--border);border-radius:6px;overflow:hidden}
+.snum{background:var(--card);padding:1.25rem;border-right:1px solid var(--border);border-bottom:1px solid var(--border);position:relative}
+.snum::before{content:'';position:absolute;top:0;left:0;width:100%;height:2px;background:linear-gradient(90deg,var(--roxo),transparent)}
+.snum-val{font-family:'Bebas Neue',sans-serif;font-size:2.2rem;letter-spacing:.02em;color:var(--roxo-neon);line-height:1;text-shadow:0 0 20px var(--roxo-glow)}
+.snum-lbl{font-family:'Barlow Condensed',sans-serif;font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--txt);margin-top:.2rem}
+
+/* DIFERENCIAIS */
+#diferenciais{background:var(--preto)}
+.dif-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-top:3.5rem}
+.dif-card{background:var(--card);padding:2.25rem;position:relative;overflow:hidden;transition:background .25s}
+.dif-card:hover{background:var(--card2)}
+.dif-card::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--roxo-neon),transparent);opacity:0;transition:opacity .3s}
+.dif-card:hover::after{opacity:1}
+.dif-icon{width:48px;height:48px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;margin-bottom:1.25rem;background:rgba(168,85,247,.1);border:1px solid rgba(168,85,247,.2);color:var(--roxo-neon)}
+.dif-card h3{font-family:'Barlow Condensed',sans-serif;font-size:1.15rem;font-weight:800;letter-spacing:.04em;text-transform:uppercase;margin-bottom:.6rem;color:var(--branco)}
+.dif-card p{font-size:.9rem;color:var(--txt);line-height:1.65;font-weight:500}
+
+/* CURSOS */
+#cursos{background:var(--preto2);border-top:1px solid var(--border)}
+.cursos-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:3rem;flex-wrap:wrap;gap:1rem}
+.area-tabs{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:2.5rem}
+.atab{font-family:'Barlow Condensed',sans-serif;font-size:.85rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--txt);background:transparent;border:1px solid var(--border);padding:.5rem 1.1rem;border-radius:3px;cursor:pointer;transition:.2s}
+.atab:hover,.atab.active{background:var(--roxo);border-color:var(--roxo);color:var(--branco);box-shadow:0 0 20px var(--roxo-glow)}
+.cursos-area{display:none}.cursos-area.active{display:block;animation:fadeUp .35s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.area-head{display:flex;align-items:center;gap:1rem;padding-bottom:1.25rem;margin-bottom:2rem;border-bottom:1px solid var(--border)}
+.area-ico{width:52px;height:52px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0;background:rgba(168,85,247,.1);border:1px solid rgba(168,85,247,.2)}
+.area-head h2{font-family:'Bebas Neue',sans-serif;font-size:1.75rem;letter-spacing:.04em}
+.area-head p{font-size:.875rem;color:var(--txt);margin-top:.2rem;font-weight:500}
+.cursos-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:1px;background:var(--border)}
+.ccard{background:var(--card);padding:1.5rem;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:.7rem;transition:background .2s;position:relative;overflow:hidden}
+.ccard:hover{background:var(--card2)}
+.ccard::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--roxo-neon);transform:scaleY(0);transition:transform .25s;transform-origin:bottom;box-shadow:2px 0 12px var(--roxo-glow)}
+.ccard:hover::before{transform:scaleY(1)}
+.ccard-top{display:flex;justify-content:space-between;align-items:flex-start}
+.ccard-emoji{font-size:1.75rem;line-height:1}
+.ccard-dur{font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--roxo-neon);background:rgba(168,85,247,.1);border:1px solid rgba(168,85,247,.25);padding:.2rem .6rem;border-radius:3px}
+.ccard-nome{font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;font-weight:800;letter-spacing:.02em;line-height:1.25;color:var(--branco)}
+.ccard-info{font-size:.8rem;color:var(--txt);display:flex;align-items:center;gap:.35rem;font-weight:500}
+.ccard-cta{display:inline-flex;align-items:center;gap:.35rem;font-family:'Barlow Condensed',sans-serif;font-size:.82rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--roxo-neon);margin-top:auto;transition:gap .2s}
+.ccard:hover .ccard-cta{gap:.6rem}
+
+/* DEPOIMENTOS */
+#prova{background:var(--preto);border-top:1px solid var(--border)}
+.prova-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-top:3.5rem}
+.pcard{background:var(--card);padding:2rem;position:relative;overflow:hidden}
+.pcard::before{content:'"';position:absolute;top:1rem;right:1.5rem;font-family:'Bebas Neue',sans-serif;font-size:5rem;line-height:1;color:var(--roxo-neon);opacity:.12}
+.pstars{color:var(--amarelo);font-size:.8rem;margin-bottom:.75rem;letter-spacing:.05em}
+.ptxt{font-size:.925rem;color:var(--txt2);line-height:1.7;margin-bottom:1.5rem;font-style:italic;font-weight:500}
+.pauthor{display:flex;align-items:center;gap:.75rem}
+.pavatar{width:40px;height:40px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:1.1rem;flex-shrink:0}
+.pnome{font-family:'Barlow Condensed',sans-serif;font-size:.95rem;font-weight:800;letter-spacing:.03em}
+.pcurso{font-size:.78rem;color:var(--roxo-neon);margin-top:.1rem;font-weight:500}
+
+/* CTA BAND */
+#cta-band{position:relative;overflow:hidden;background:var(--preto2);border-top:1px solid var(--border);padding:5rem 3rem}
+#cta-band::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 80% at 50% 50%,rgba(139,47,201,.25),transparent 70%)}
+.cta-band-inner{position:relative;z-index:1;max-width:1280px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:3rem;flex-wrap:wrap}
+.cta-band-txt h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.2rem,4vw,3.5rem);line-height:.95;letter-spacing:.02em;margin-bottom:.75rem}
+.cta-band-txt h2 span{color:var(--roxo-neon);text-shadow:0 0 30px var(--roxo-glow)}
+.cta-band-txt p{font-size:1rem;color:var(--txt2);font-weight:500;line-height:1.6}
+.cta-band-actions{display:flex;gap:1rem;flex-wrap:wrap;flex-shrink:0}
+
+/* CONTATO */
+#contato{background:var(--preto);border-top:1px solid var(--border)}
+.contato-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start}
+.info-blk{margin-bottom:2rem}
+.info-label{font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--roxo-neon);margin-bottom:.35rem}
+.info-val{font-size:.95rem;color:var(--txt2);line-height:1.6;font-weight:500}
+.info-val a{color:var(--ciano-neon);text-decoration:none}
+.horario-tbl{width:100%;border-collapse:collapse}
+.horario-tbl tr{border-bottom:1px solid var(--border)}
+.horario-tbl td{padding:.55rem 0;font-size:.875rem;font-weight:500}
+.horario-tbl td:first-child{color:var(--txt)}
+.horario-tbl td:last-child{color:var(--branco);text-align:right;font-weight:700}
+.horario-obs{font-size:.78rem;color:var(--roxo-neon);margin-top:.5rem;font-weight:500}
+.social-row{display:flex;gap:.75rem;margin-top:2rem}
+.soc{width:42px;height:42px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:1rem;text-decoration:none;color:var(--branco);border:1px solid var(--border);background:var(--card);transition:.2s}
+.soc:hover{transform:translateY(-3px)}
+.soc.ig:hover{background:linear-gradient(135deg,#833AB4,#E1306C);border-color:transparent}
+.soc.fb:hover{background:#1877F2;border-color:transparent}
+.soc.wa:hover{background:#25D366;border-color:transparent}
+.map-box{border:1px solid var(--border);border-radius:6px;overflow:hidden;height:280px;background:var(--card)}
+.map-box iframe{width:100%;height:100%;border:none;filter:grayscale(20%)}
+.map-footer{margin-top:1rem;padding:1.25rem;background:var(--card);border:1px solid var(--border);border-radius:6px}
+.map-footer p{font-size:.85rem;color:var(--txt);line-height:1.6;margin-bottom:.75rem;font-weight:500}
+.map-footer a{display:inline-flex;align-items:center;gap:.4rem;font-family:'Barlow Condensed',sans-serif;font-size:.85rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--roxo-neon);text-decoration:none}
+.map-footer a:hover{color:var(--branco)}
+
+/* FOOTER */
+footer{background:var(--preto2);border-top:1px solid var(--border);padding:3.5rem 3rem 2rem}
+.footer-inner{max-width:1280px;margin:0 auto}
+.footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:3rem;margin-bottom:3rem}
+.footer-brand p{font-size:.875rem;color:var(--txt);line-height:1.65;margin-top:.85rem;max-width:260px;font-weight:500}
+.footer-logo{height:50px;filter:drop-shadow(0 0 10px var(--roxo-glow))}
+.footer-col h4{font-family:'Barlow Condensed',sans-serif;font-size:.8rem;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--roxo-neon);margin-bottom:1.25rem}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:.65rem}
+.footer-col a{text-decoration:none;color:var(--txt);font-size:.875rem;font-weight:500;transition:color .2s}
+.footer-col a:hover{color:var(--branco)}
+.footer-bottom{border-top:1px solid var(--border);padding-top:1.75rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+.footer-bottom p{font-size:.8rem;color:rgba(255,255,255,.3);font-weight:500}
+.footer-bottom span{color:var(--roxo-neon)}
+
+/* WA FLOAT */
+.wa-float{position:fixed;bottom:2rem;right:2rem;width:58px;height:58px;border-radius:6px;background:#25D366;display:flex;align-items:center;justify-content:center;text-decoration:none;color:var(--branco);font-size:1.5rem;z-index:999;box-shadow:0 4px 24px rgba(37,211,102,.4);transition:.2s}
+.wa-float:hover{transform:scale(1.08);box-shadow:0 6px 40px rgba(37,211,102,.65)}
+
+/* MOBILE MENU */
+.mob-menu{display:none;position:fixed;top:68px;left:0;right:0;background:rgba(5,5,10,.98);backdrop-filter:blur(24px);border-bottom:1px solid var(--border);padding:1.5rem 2rem;z-index:998;flex-direction:column;gap:.25rem}
+.mob-menu.open{display:flex}
+.mob-menu a{display:block;padding:.75rem 0;border-bottom:1px solid rgba(255,255,255,.06);text-decoration:none;font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--txt2);transition:color .2s}
+.mob-menu a:hover{color:var(--roxo-neon)}
+
+/* RESPONSIVE */
+@media(max-width:1024px){
+  .sobre-grid,.contato-grid{grid-template-columns:1fr;gap:3rem}
+  .dif-grid{grid-template-columns:1fr 1fr}
+  .prova-grid{grid-template-columns:1fr}
+  .stats-inner{grid-template-columns:repeat(3,1fr)}
+  .footer-grid{grid-template-columns:1fr 1fr}
+  .cta-band-inner{flex-direction:column;text-align:center}
+}
+@media(max-width:768px){
+  nav{padding:0 1.25rem}.nav-links{display:none}.hamburger{display:flex}
+  section{padding:4rem 1.25rem}
+  .stats-bar{padding:2rem 1.25rem}.stats-inner{grid-template-columns:1fr 1fr}
+  .stat-card{border-right:none;border-bottom:1px solid var(--border)}
+  .dif-grid{grid-template-columns:1fr}
+  .footer-grid{grid-template-columns:1fr}
+  .footer-bottom{flex-direction:column;text-align:center}
+  #cta-band{padding:4rem 1.25rem}
+  .hero-inner{padding:0 1.25rem}.slide-num{display:none}.hero-nav{left:1.25rem}
+}
+</style>
+</head>
+<body>
+
+<nav id="navbar">
+  <a href="#" class="nav-logo">
+    <img src="uniforme_3307_x_4252_px_.png" alt="Evolua+" onerror="this.style.display='none'">
+    <span class="nav-logo-text">EVOLUA<span>+</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#sobre">Sobre</a></li>
+    <li><a href="#cursos">Cursos</a></li>
+    <li><a href="#diferenciais">Diferenciais</a></li>
+    <li><a href="#contato">Contato</a></li>
+    <li><a href="https://wa.me/5565996834279?text=Olá!%20Quero%20conhecer%20os%20cursos!" target="_blank" class="nav-cta"><i class="fab fa-whatsapp"></i> Fale Conosco</a></li>
+  </ul>
+  <div class="hamburger" onclick="toggleMob()"><span></span><span></span><span></span></div>
+</nav>
+
+<div class="mob-menu" id="mobMenu">
+  <a href="#sobre" onclick="toggleMob()">Sobre Nós</a>
+  <a href="#cursos" onclick="toggleMob()">Cursos</a>
+  <a href="#diferenciais" onclick="toggleMob()">Diferenciais</a>
+  <a href="#contato" onclick="toggleMob()">Contato</a>
+  <a href="https://wa.me/5565996834279" target="_blank" style="color:#25D366!important"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-inner">
+    <div class="slides-wrap" style="width:100%">
+      <div class="slides-track" id="track">
+        <div class="slide active">
+          <div class="slide-eyebrow"><i class="fas fa-bolt"></i> Educação que Transforma</div>
+          <h1 class="slide-title">TRANSFORME<br>SEU FUTURO COM<br><span class="line-roxo">CAPACITAÇÃO</span><br><span class="line-roxo">PROFISSIONAL</span></h1>
+          <p class="slide-desc">Mais de 50 cursos profissionalizantes com certificado reconhecido em todo o Brasil. Do zero ao mercado de trabalho.</p>
+          <div class="slide-actions">
+            <a href="#cursos" class="btn btn-roxo"><i class="fas fa-graduation-cap"></i> Ver Cursos</a>
+            <a href="https://wa.me/5565996834279?text=Quero%20conhecer%20os%20cursos!" target="_blank" class="btn btn-outline"><i class="fab fa-whatsapp"></i> Fale Conosco</a>
+          </div>
+          <div class="slide-num">01</div>
+        </div>
+        <div class="slide">
+          <div class="slide-eyebrow"><i class="fas fa-robot"></i> Inteligência Artificial</div>
+          <h1 class="slide-title">PROFISSIONAIS<br>DE IA GANHAM<br>ATÉ <span class="line-ciano">R$ 15.000</span><br><span class="line-ciano">POR MÊS</span></h1>
+          <p class="slide-desc">O mercado de IA está crescendo e busca especialistas. Comece hoje sua jornada na área mais promissora do mundo.</p>
+          <div class="slide-actions">
+            <a href="#cursos" class="btn btn-roxo"><i class="fas fa-robot"></i> Cursos de IA</a>
+            <a href="https://wa.me/5565996834279?text=Quero%20o%20curso%20de%20IA!" target="_blank" class="btn btn-outline"><i class="fab fa-whatsapp"></i> Saiba Mais</a>
+          </div>
+          <div class="slide-num">02</div>
+        </div>
+        <div class="slide">
+          <div class="slide-eyebrow"><i class="fas fa-rocket"></i> Profissional do Futuro</div>
+          <h1 class="slide-title">CARREIRAS<br>EM ALTA COM<br>SALÁRIOS ATÉ<br><span class="line-laranja">R$ 20.000</span></h1>
+          <p class="slide-desc">Tecnologia, Design, Administração e muito mais. Qualifique-se nas carreiras que o mercado mais valoriza.</p>
+          <div class="slide-actions">
+            <a href="#cursos" class="btn btn-roxo"><i class="fas fa-fire"></i> Quero me Qualificar</a>
+            <a href="https://wa.me/5565996834279" target="_blank" class="btn btn-outline"><i class="fab fa-whatsapp"></i> Tirar Dúvidas</a>
+          </div>
+          <div class="slide-num">03</div>
+        </div>
+        <div class="slide">
+          <div class="slide-eyebrow"><i class="fas fa-certificate"></i> Destaque-se</div>
+          <h1 class="slide-title"><span class="line-roxo">85%</span> DOS<br>GESTORES<br>PREFEREM<br>CERTIFICADOS</h1>
+          <p class="slide-desc">Certificado reconhecido em todo o Brasil, metodologia 5.0 e início imediato sem pré-requisitos para se inscrever.</p>
+          <div class="slide-actions">
+            <a href="#sobre" class="btn btn-roxo"><i class="fas fa-medal"></i> Conhecer a Escola</a>
+            <a href="https://wa.me/5565996834279?text=Quero%20me%20matricular!" target="_blank" class="btn btn-outline"><i class="fab fa-whatsapp"></i> Me Matricular</a>
+          </div>
+          <div class="slide-num">04</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-nav">
+    <div class="hero-dots" id="hdots">
+      <button class="hdot active" onclick="gSlide(0)"></button>
+      <button class="hdot" onclick="gSlide(1)"></button>
+      <button class="hdot" onclick="gSlide(2)"></button>
+      <button class="hdot" onclick="gSlide(3)"></button>
+    </div>
+    <div class="hero-arrows">
+      <button class="harrow" onclick="dSlide(-1)"><i class="fas fa-chevron-left"></i></button>
+      <button class="harrow" onclick="dSlide(1)"><i class="fas fa-chevron-right"></i></button>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker"><div class="ticker-track" id="ticker"></div></div>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stats-inner">
+    <div class="stat-card"><div class="stat-val">+1000</div><div class="stat-lbl">Alunos Formados</div></div>
+    <div class="stat-card"><div class="stat-val">+50</div><div class="stat-lbl">Cursos Disponíveis</div></div>
+    <div class="stat-card"><div class="stat-val">100%</div><div class="stat-lbl">Cert. Reconhecido</div></div>
+    <div class="stat-card"><div class="stat-val">2021</div><div class="stat-lbl">Fundação</div></div>
+    <div class="stat-card"><div class="stat-val">+200</div><div class="stat-lbl">Graduações EAD</div></div>
+  </div>
+</div>
+
+<!-- SOBRE -->
+<section id="sobre">
+  <div class="container">
+    <div class="sobre-grid">
+      <div class="mascote-wrap">
+        <div class="mascote-ring"></div>
+        <div class="mascote-ring mascote-ring-2"></div>
+        <div class="mascote-glow"></div>
+        <img src="uniforme_3307_x_4252_px_.png" alt="Mascote Evolua+" class="mascote-img">
+        <div class="sobre-pills">
+          <span class="pill">🏆 Grupo Evolua Educação</span>
+          <span class="pill">🎓 Polo Cruzeiro do Sul Virtual</span>
+          <span class="pill">📜 Certificado MEC</span>
+          <span class="pill">+6M alunos formados no Brasil</span>
+        </div>
+      </div>
+      <div class="sobre-body">
+        <div class="eyebrow">Nossa História</div>
+        <h2 class="sec-title">QUEM<br>SOMOS <span>NÓS?</span></h2>
+        <p>A <strong>Evolua+ Profissões</strong> foi fundada por <strong>Valéria Moura e Marcos Dias</strong> — ela com formação em Língua Inglesa, ele formado em Tecnologia. Juntos, têm mais de <strong>15 anos atuando no ramo de educação</strong> em Mirassol D'Oeste e região.</p>
+        <p>Desde <strong>2021</strong>, formamos profissionais qualificados em todo o Brasil. Somos licenciados da <strong>Evolua Educação</strong>, maior grupo educacional do país, com mais de <strong>6 milhões de alunos formados</strong> em mais de 20 anos de mercado.</p>
+        <p>Somos polo oficial da <strong>Universidade Cruzeiro do Sul Virtual</strong>, ofertando Graduação, Técnicos e Pós-Graduação para todo o Brasil.</p>
+        <div class="sobre-nums">
+          <div class="snum"><div class="snum-val">+15</div><div class="snum-lbl">Anos de experiência</div></div>
+          <div class="snum"><div class="snum-val">+1000</div><div class="snum-lbl">Alunos formados</div></div>
+          <div class="snum"><div class="snum-val">+50</div><div class="snum-lbl">Cursos disponíveis</div></div>
+          <div class="snum"><div class="snum-val">+200</div><div class="snum-lbl">Graduações EAD</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DIFERENCIAIS -->
+<section id="diferenciais">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:.5rem">
+      <div class="eyebrow" style="justify-content:center">Por que a Evolua+</div>
+      <h2 class="sec-title">NOSSOS <span>DIFERENCIAIS</span></h2>
+      <p class="sec-sub" style="margin:0 auto">Metodologia única que garante aprendizado real, certificação reconhecida e acompanhamento completo.</p>
+    </div>
+    <div class="dif-grid">
+      <div class="dif-card"><div class="dif-icon"><i class="fas fa-brain"></i></div><h3>Metodologia 5.0</h3><p>Ensino humanizado que segue o ritmo do aluno, com horários flexíveis, aulas interativas, vídeos e exercícios práticos de assimilação otimizada.</p></div>
+      <div class="dif-card"><div class="dif-icon" style="background:rgba(6,182,212,.1);border-color:rgba(6,182,212,.2);color:var(--ciano-neon)"><i class="fas fa-certificate"></i></div><h3>Certificado Reconhecido</h3><p>Certificados válidos em todo o Brasil, reconhecidos pelo mercado de trabalho e por empresas de todos os portes e segmentos.</p></div>
+      <div class="dif-card"><div class="dif-icon" style="background:rgba(249,115,22,.1);border-color:rgba(249,115,22,.2);color:var(--laranja-neon)"><i class="fas fa-clock"></i></div><h3>Início Imediato</h3><p>Sem pré-requisitos para se inscrever. Comece quando quiser, no seu ritmo, com suporte pedagógico nos horários comerciais e plantão noturno.</p></div>
+      <div class="dif-card"><div class="dif-icon" style="background:rgba(234,179,8,.1);border-color:rgba(234,179,8,.2);color:var(--amarelo)"><i class="fas fa-book-open"></i></div><h3>Material Didático</h3><p>Desenvolvido com foco no mercado de trabalho, com atividades voltadas à prática baseadas em rotinas reais de cada área profissional.</p></div>
+      <div class="dif-card"><div class="dif-icon" style="background:rgba(236,72,153,.1);border-color:rgba(236,72,153,.2);color:var(--pink)"><i class="fas fa-handshake"></i></div><h3>Orientação Profissional</h3><p>Encontros presenciais e online, palestras, e-books, lives e consultoria para te preparar para o mercado de trabalho com segurança.</p></div>
+      <div class="dif-card"><div class="dif-icon" style="background:rgba(16,185,129,.1);border-color:rgba(16,185,129,.2);color:var(--verde)"><i class="fas fa-globe"></i></div><h3>Cert. Internacionais</h3><p>Preparação para TOEIC, TFL e IELTS com aulas de inglês particulares para os principais exames de proficiência do mundo.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- CURSOS -->
+<section id="cursos">
+  <div class="container">
+    <div class="cursos-head">
+      <div><div class="eyebrow">Portfólio Completo</div><h2 class="sec-title">NOSSOS <span>CURSOS</span></h2></div>
+      <p class="sec-sub">Selecione uma área. Cada curso abre o WhatsApp com mensagem personalizada.</p>
+    </div>
+    <div class="area-tabs">
+      <button class="atab active" onclick="showArea('tec')">💻 Tecnologia</button>
+      <button class="atab" onclick="showArea('prog')">👨‍💻 Programação</button>
+      <button class="atab" onclick="showArea('design')">🎨 Design</button>
+      <button class="atab" onclick="showArea('ia')">🤖 IA</button>
+      <button class="atab" onclick="showArea('adm')">📊 Administração</button>
+      <button class="atab" onclick="showArea('agro')">🌾 Agronegócio</button>
+      <button class="atab" onclick="showArea('serv')">🏨 Serviços</button>
+      <button class="atab" onclick="showArea('proj')">📐 Projetos</button>
+      <button class="atab" onclick="showArea('edu')">📚 Educação</button>
+    </div>
+
+    <div class="cursos-area active" id="area-tec">
+      <div class="area-head"><div class="area-ico">💻</div><div><h2>Tecnologia & Informática</h2><p>Domine as ferramentas tecnológicas mais exigidas pelo mercado</p></div></div>
+      <div class="cursos-grid">
+        <a class="ccard" href="https://wa.me/5565996834279?text=Quero%20informações%20sobre%20Operador%20de%20Informática%20Essencial!" target="_blank"><div class="ccard-top"><span class="ccard-emoji">🖥️</span><span class="ccard-dur">8 meses</span></div><div class="ccard-nome">Operador de Informática Essencial</div><div class="ccard-info"><i class="fas fa-clock"></i> 92h · 7 apostilas · Word, Excel, PowerPoint</div><div class="ccard-cta">Saiba mais <i class="fab fa-whatsapp"></i></div></a>
+        <a class="ccard" href="https://wa.me/5565996834279?text=Quero%20informações%20sobre%20Operador%20de%20Informática%20Avançada!" target="_blank"><div class="ccard-top"><span class="ccard-emoji">💻</span><span class="ccard-dur">16 meses</span></div><div class="ccard-nome">Operador de Informática Avançada</div><div class="ccard-info"><i class="fas fa-clock"></i> 134h · 13 apostilas · Pacote completo</div><div class="ccard-cta">Saiba mais <i class="fab fa-whatsapp"></i></div></a>
+        <a class="ccard" href="https://wa.me/5565996834279?text=Quero%20informações%20sobre%20Informática%20Kids!" target="_blank"><div class="ccard-top"><span class="ccard-emoji">👦</span><span class="ccard-dur">12 meses</span></div><div class="ccard-nome">Informática Kids</div><div class="ccard-info"><i class="fas fa-clock"></i> 112h · 8 apostilas · A partir de 8 anos</div><div class="ccard-cta">Saiba mais <i class="fab fa-whatsapp"></i></div></a>
+        <a class="ccard" href="https://wa.me/5565996834279?text=Quero%20informações%20sobre%20Melhor%20Idade%20Conectada!" target="_blank"><div class="ccard-top"><span class="ccard-emoji">👴</span><span class="ccard-dur">9 meses</span></div><div class="ccard-nome">Melhor Idade Conectada</div><div class="ccard-info"><i class="fas fa-clock"></i> 72h · 7 apostilas · Tecnologia para a vida</div><div class="ccard-cta">Saiba mais <i class="fab fa-whatsapp"></i></div></a>
+        <a class="ccard" href="https://wa.me/5565996834279?text=Quero%20informações%20sobre%20Manutenção%20de%20Computadores%20e%20Redes!" target="_blank"><div class="ccard-top"><span class="ccard-emoji">🔧</span><span class="ccard-dur">9 meses</span></div><div class="ccard-nome">Manutenção de Computadores e Redes</div><div class="ccard-info"><i class="fas fa-clock"></i> 65h · 5 apostilas · Hardware + Redes</div><div class="ccard-cta">Saiba mais <i class="fab fa-whatsapp"></i></div></a>
+        <a class="ccard" href="https://wa.me/5565996834279?text=Quero%20informações%20sobre%20Manutenção%20de%20Notebooks!" target="_blank"><div class="ccard-top"><span class="ccard-emoji">🔩</span><span class="ccard-dur">2 meses</span></div><div class="ccard-nome">Manutenção de Notebooks</div><div class="ccard-info"><i class="fas fa-clock"></i> 16h · Hardware e software</div><div class="ccard-cta">Saiba mais <i class="fab fa-whatsapp"></i></div></a>
+        <a class="ccard" href="https://wa.me/5565996834279?text=Quero%20informações%20sobre%20Manutenção%20de%20Dispositivos%20Móveis!" target="_blank"><div class="ccard-top"><span class="ccard-emoji">📱</span><span class="ccard-dur">2 meses</span></div><div class="ccard-nome">Manutenção de Dispositivos Móveis</div><div class="ccard-info"><i class="fas fa-clock"></i> 16h · Celulares e tablets</div><div class="ccard-cta">Saiba mais <i class="fab fa-whatsapp"></i></div></a>
+        <a class="ccard" href="https://wa.me/5565996834279?text=Quero%20informações%20sobre%20Redes%20de%20Computadores!" target="_blank"><div class="ccard-top"><span class="ccard-emoji">🌐</span><span class="ccard-dur">5 meses</span></div><div class="ccard-nome">Redes de Computadores</div><div class="ccard-info"><i class="fas fa-clock"></i> 33h · 3 apostilas · Wi-Fi, cabeamento, infra</div><div class="ccard-cta">Saiba mais <i class="fab fa-whatsapp"></i></div></a>
+      </div>
+    </div>
+
+    <div class="cursos-area" id="area-prog">
+      <div class="area-head"><div class="area-ico" style="background:rgba(6,182,212,.1);border-color:rgba(6,182,212,.2)">👨‍💻</div><div><h2>Programação & Desenvolvimento</h2><p>Entre no universo do desenvolvimento de software e aplicações</p></div></div>
+      <div class="cursos-grid">
+        <a class="ccard" href="https://wa.me/5565996834279?text=Quero%20informações%20sobre%20Desenvolvedor%20Web!" target="_blank"><div class="ccard-top"><span class="ccard-emoji">🌐</span><span class="ccard-dur">5 meses</span></div><div class="ccard-nome">Desenvolvedor Web</div><div class="ccard-info"><i class="fas fa-clock"></i> 40h · 4 apostilas · HTML, CSS, JS, WordPress</div><div class="ccard-cta">Saiba mais <i class="fab fa-whatsapp"></i></div></a>
+        <a class="ccard" href="https://wa.me/5565996834279?text=Quero%20informações%20sobre%20Programador%20Avançado!" target="_blank"><div class="ccard-top"><span class="ccard-emoji">⌨️</span><span class="ccard-dur">13 meses</span></div><div class="ccard-nome">Programador de Computador Avançado</div><div class="ccard-info"><i class="fas fa-clock"></i> 100h · 6 apostilas · C# e SQL</div><div class="ccard-cta">Saiba mais <i class="fab fa-whatsapp"></i></div></a>
+        <a class="ccard" href="https://wa.me/5565996834279?text=Quero%20informações%20sobre%20Desenvolvedor%20de%20Apps%20Mobile!" target="_blank"><div class="ccard-top"><span class="ccard-emoji">📱</span><span class="ccard-dur">7 meses</span></div><div class="ccard-nome">Desenvolvedor de Aplicativos Mobile</div><div class="ccard-info"><i class="fas fa-clock"></i> 52h · 4 apostilas · Ionic, Angular, Cordova</div><div class="ccard-cta">Saiba mais <i class="fab fa-whatsapp"></i></div></a>
+        <a class="ccard" href="https://wa.me/5565996834279?text=Quero%20informações%20sobre%20Desenvolvedor%20de%20Games!" target="_blank"><div class="ccard-top"><span class="ccard-emoji">🎮</span><span class="ccard-dur">8 meses</span></div><div class="ccard-nome">Desenvolvedor de Games 2D e 3D</div><div class="ccard-info"><i class="fas fa-clock"></i> 64h · 3 apostilas · Construct 3, Unreal Engine</div><div class="ccard-cta">Saiba mais <i class="fab fa-whatsapp"></i></div></a>
+      </div>
+    </div>
+
+    <div class="cursos-area" id="area-design">
+      <div class="area-head"><div class="area-ico" style="background:rgba(236,72,153,.1);border-color:rgba(236,72,153,.2)">🎨</div><div><h2>Design & Criação</h2><p>Desperte sua criatividade e entre no mercado do design digital</p></div></div>
+      <div class="cursos-grid">
+        <a class="ccard" href="https://wa.me/5565996834279?text=Quero%20informações%20sobre%20Designer%20Gráfico!" target="_blank"><div class="ccard-top"><span class="ccard-emoji">🎨</span><span class="ccard-dur">13 meses</span></div><div class="ccard-nome">Designer Gráfico</div><div class="ccard-info"><i class="fas fa-clock"></i> 102h · 7 apostilas · CorelDRAW, Photoshop, Illustrator, XD</div><div class="ccard-cta">Saiba mais <i class="fab fa-whatsapp"></i></div></a>
+        <a class="ccard" href="https://wa.me/5565996834279?text=Quero%20informações%20sobre%20Video%20Maker!" target="_blank"><div class="ccard-top"><span class="ccard-emoji">🎬</span><span class="ccard-dur">4 meses</span></div><div class="ccard-nome">Video Maker</div><div class="ccard-info"><i class="fas fa-clock"></i> 32h · Adobe Premiere + After Effects</div><div class="ccard-cta">Saiba mais <i class="fab fa-whatsapp"></i></div></a>
+        <a class="ccard" href="https://wa.me/5565996834279?text=Quero%20informações%20sobre%20Youtuber!" target="_blank"><div class="ccard-top"><span class="ccard-emoji">📹</span><span class="ccard-dur">1 mês</span></div><div class="ccard-nome">Youtuber</div><div class="ccard-info"><i class="fas fa-clock"></i> 8h · Canal de sucesso no YouTube</div><div class="ccard-cta">Saiba mais <i class="fab fa-whatsapp"></i></div></a>
+        <a class="ccard" href="https://wa.me/5565996834279?text=Quero%20informações%20sobre%20Modelagem%203D!" target="_blank"><div class="ccard-top"><span class="ccard-emoji">🗿</span><span class="ccard-dur">4 meses</span></div><div class="ccard-nome">Modelagem 3D – 3DS Studio Max</div><div class="ccard-info"><i class="fas fa-clock"></i> 32h · Jogos, filmes, arquitetura</div><div class="ccard-cta">Saiba mais <i class="fab fa-whatsapp"></i></div></a>
+        <a class="ccard" href="https://wa.me/5565996834279?text=Quero%20informações%20sobre%20Design%20com%20Canva!" target="_blank"><div class="ccard-top"><span class="ccard-emoji">✏️</span><span class="ccard-dur">2 meses</span></div><div class="ccard-nome">Design com Canva</div><div class="ccard-info"><i class="fas fa-clock"></i> 16h · Da ideia à criação visual</div><div class="ccard-cta">Saiba mais <i class="fab fa-whatsapp"></i></div></a>
+      </div>
+    </div>
+
+    <div class="cursos-area" id="area-ia">
+      <div class="area-head"><div class="area-ico" style="background:rgba(6,182,212,.1);border-color:rgba(6,182,212,.2)">🤖</div><div><h2>Inteligência Artificial</h2><p>A área que mais cresce no mundo — prepare-se para o futuro agora</p></div></div>
+      <div class="cursos-grid">
+        <a class="ccard" href="https://wa.me/5565996834279?text=Quero%20informações%20sobre%20IA%20Ferramentas%20e%20Aplicações!" target="_blank"><div class="ccard-top"><span class="ccard-emoji">🤖</span><span class="ccard-dur">2 meses</span></div><div class="ccard-nome">IA – Ferramentas e Aplicações</div><div class="ccard-info"><i class="fas fa-clock"></i> 16h · Conteúdo, imagens, produtividade</div><div class="ccard-cta">Saiba mais <i class="fab fa-whatsapp"></i></div></a>
+        <a class="ccard" href="https://wa.me/5565996834279?text=Quero%20informações%20sobre%20Automação%20com%20IA!" target="_blank"><div class="ccard-top"><span class="ccard-emoji">⚙️</span><span class="ccard-dur">1 mês</span></div><div class="ccard-nome">Automação com IA</div><div class="ccard-info"><i class="fas fa-clock"></i> 8h · Fluxos inteligentes e agendamentos</div><div class="ccard-cta">Saiba mais <i class="fab fa-whatsapp"></i></div></a>
+        <a class="ccard" href="https://wa.me/5565996834279?text=Quero%20informações%20sobre%20IA%20Criativa!" target="_blank"><div class="ccard-top"><span class="ccard-emoji">🎭</span><span class="ccard-dur">1 mês</span></div><div class="ccard-nome">IA Criativa – Artes e Projetos</div><div class="ccard-info"><i class="fas fa-clock"></i> 8h · Canva, Gamma, Leonardo AI, ChatGPT</div><div class="ccard-cta">Saiba mais <i class="fab fa-whatsapp"></i></div></a>
+        <a class="ccard" href="https://wa.me/5565996834279?text=Quero%20informações%20sobre%20Marketing%20com%20IA!" target="_blank"><div class="ccard-top"><span class="ccard-emoji">📣</span><span class="ccard-dur">1 mês</span></div><div class="ccard-nome">Marketing com IA</div><div class="ccard-info"><i class="fas fa-clock"></i> 8h · Conteúdo, SEO, vídeos, conversão</div><div class="ccard-cta">Saiba mais <i class="fab fa-whatsapp"></i></div></a>
+        <a class="ccard" href="https://wa.me/5565996834279?text=Quero%20informações%20sobre%20Vendas%20com%20IA!" target="_blank"><div class="ccard-top"><span class="ccard-emoji">💰</span><span class="ccard-dur">1 mês</span></div><div class="ccard-nome">Vendas com IA</div><div class="ccard-info"><i class="fas fa-clock"></i> 8h · CRM, chatbots, relacionamento</div><div class="ccard-cta">Saiba mais <i class="fab fa-whatsapp"></i></div></a>
+        <a class="ccard" href="https://wa.me/5565996834279?text=Quero%20informações%20sobre%20Gestão%20com%20IA!" target="_blank"><div class="ccard-top"><span class="ccard-emoji">📊</span><span class="ccard-dur">1 mês</span></div><div class="ccard-nome">Gestão com IA</div><div class="ccard-info"><i class="fas fa-clock"></i> 8h · Finanças, precificação, organização</div><div class="ccard-cta">Saiba mais <i class="fab fa-whatsapp"></i></div></a>
+      </div>
+    </div>
+
+    <div class="cursos-area" id="area-adm">
+      <div class="area-head"><div class="area-ico" style="background:rgba(234,179,8,.1);border-color:rgba(234,179,8,.2)">📊</div><div><h2>Administração & Negócios</h2><p>Gestão, vendas, finanças e mais para sua carreira administrativa</p></div></div>
+      <div class="cursos-grid">
+        <a class="ccard" href="https://wa.me/5565996834279?text=Quero%20informações%20sobre%20Gestão%20Empresarial!" target="_blank"><div class="ccard-top"><span class="ccard-emoji">🏢</span><span class="ccard-dur">36 meses</span></div><div class="ccard-nome">Gestão Empresarial</div><div class="ccard-info"><i class="fas fa-clock"></i> 275h · 25 apostilas · +20 áreas de atuação</div><div class="ccard-cta">Saiba mais <i class="fab fa-whatsapp"></i></div></a>
+        <a class="ccard" href="https://wa.me/5565996834279?text=Quero%20informações%20sobre%20Assistente%20Administrativo!" target="_blank"><div class="ccard-top"><span class="ccard-emoji">📋</span><span class="ccard-dur">10 meses</span></div><div class="ccard-nome">Assistente Administrativo</div><div class="ccard-info"><i class="fas fa-clock"></i> 76h · 6 apostilas · Rotinas, Google, DP</div><div class="ccard-cta">Saiba mais <i class="fab fa-whatsapp"></i></div></a>
+        <a class="ccard" href="https://wa.me/5565996834279?text=Quero%20informações%20sobre%20Assistente%20de%20RH!" target="_blank"><div class="ccard-top"><span class="ccard-emoji">👥</span><span class="ccard-dur">14 meses</span></div><div class="ccard-nome">Assistente de RH e Depto. Pessoal</div><div class="ccard-info"><i class="fas fa-clock"></i> 107h · 8 apostilas · CLT, folha, admissão</div><div class="ccard-cta">Saiba mais <i class="fab fa-whatsapp"></i></div></a>
+        <a class="ccard" href="https://wa.me/5565996834279?text=Quero%20informações%20sobre%20Marketing%20Digital!" target="_blank"><div class="ccard-top"><span class="ccard-emoji">📣</span><span class="ccard-dur">18 meses</span></div><div class="ccard-nome">Marketing Digital</div><div class="ccard-info"><i class="fas fa-clock"></i> 140h · 14 apostilas · SEO, redes, e-commerce</div><div class="ccard-cta">Saiba mais <i class="fab fa-whatsapp"></i></div></a>
+        <a class="ccard" href="https://wa.me/5565996834279?text=Quero%20informações%20sobre%20Supervisor%20de%20Vendas!" target="_blank"><div class="ccard-top"><span class="ccard-emoji">🏆</span><span class="ccard-dur">16 meses</span></div><div class="ccard-nome">Supervisor de Vendas</div><div class="ccard-info"><i class="fas fa-clock"></i> 122h · 12 apostilas · Liderança e negociação</div><div class="ccard-cta">Saiba mais <i class="fab fa-whatsapp"></i></div></a>
+        <a class="ccard" href="https://wa.me/5565996834279?text=Quero%20informações%20sobre%20Gestão%20Financeira!" target="_blank"><div class="ccard-top"><span class="ccard-emoji">💹</span><span class="ccard-dur">19 meses</span></div><div class="ccard-nome">Gestão Financeira</div><div class="ccard-info"><i class="fas fa-clock"></i> 145h · 15 apostilas · Excel, Power BI, DP</div><div class="ccard-cta">Saiba mais <i class="fab fa-whatsapp"></i></div></a>
+        <a class="ccard" href="https://wa.me/5565996834279?text=Quero%20informações%20sobre%20Analista%20Power%20BI!" target="_blank"><div class="ccard-top"><span class="ccard-emoji">📈</span><span class="ccard-dur">9 meses</span></div><div class="ccard-nome">Analista Power BI</div><div class="ccard-info"><i class="fas fa-clock"></i> 72h · 6 apostilas · Excel + Power BI completo</div><div class="ccard-cta">Saiba mais <i class="fab fa-whatsapp"></i></div></a>
+        <a class="ccard" href="https://wa.me/5565996834279?text=Quero%20informações%20sobre%20Assistente%20Contábil!" target="_blank"><div class="ccard-top"><span class="ccard-emoji">🧾</span><span class="ccard-dur">23 meses</span></div><div class="ccard-nome">Assistente Contábil</div><div class="ccard-info"><i class="fas fa-clock"></i> 179h · 12 apostilas · Contabilidade, RH, Power BI</div><div class="ccard-cta">Saiba mais <i class="fab fa-whatsapp"></i></div></a>
+        <a class="ccard" href="https://wa.me/5565996834279?text=Quero%20informações%20sobre%20Jovem%20Aprendiz!" target="_blank"><div class="ccard-top"><span class="ccard-emoji">🌱</span><span class="ccard-dur">9 meses</span></div><div class="ccard-nome">Jovem Aprendiz Administrativo</div><div class="ccard-info"><i class="fas fa-clock"></i> 72h · 10 apostilas · 14 a 24 anos</div><div class="ccard-cta">Saiba mais <i class="fab fa-whatsapp"></i></div></a>
+        <a class="ccard" href="https://wa.me/5565996834279?text=Quero%20informações%20sobre%20Operador%20de%20Caixa!" target="_blank"><div class="ccard-top"><span class="ccard-emoji">🛒</span><span class="ccard-dur">3 meses</span></div><div class="ccard-nome">Operador de Caixa</div><div class="ccard-info"><i class="fas fa-clock"></i> 18h · 2 apostilas · Varejo e atendimento</div><div class="ccard-cta">Saiba mais <i class="fab fa-whatsapp"></i></div></a>
+        <a class="ccard" href="https://wa.me/5565996834279?text=Quero%20informações%20sobre%20Google%20Workspace!" target="_blank"><div class="ccard-top"><span class="ccard-emoji">🔵</span><span class="ccard-dur">5 meses</span></div><div class="ccard-nome">Google Workspace</div><div class="ccard-info"><i class="fas fa-clock"></i> 40h · 13 apostilas · Docs, Sheets, Meet, Drive</div><div class="ccard-cta">Saiba mais <i class="fab fa-whatsapp"></i></div></a>
+      </div>
+    </div>
+
+    <div class="cursos-area" id="area-agro">
+      <div class="area-head"><div class="area-ico" style="background:rgba(16,185,129,.1);border-color:rgba(16,185,129,.2)">🌾</div><div><h2>Agronegócio</h2><p>Qualificação para o setor agroindustrial, motor da economia de Mato Grosso</p></div></div>
+      <div class="cursos-grid">
+        <a class="ccard" href="https://wa.me/5565996834279?text=Quero%20informações%20sobre%20Assistente%20de%20Produção%20de%20Açúcar%20e%20Álcool!" target="_blank"><div class="ccard-top"><span class="ccard-emoji">🌿</span><span class="ccard-dur">3 meses</span></div><div class="ccard-nome">Assistente de Produção de Açúcar e Álcool</div><div class="ccard-info"><i class="fas fa-clock"></i> 18h · Usinas, destilarias, agroindústria</div><div class="ccard-cta">Saiba mais <i class="fab fa-whatsapp"></i></div></a>
+      </div>
+    </div>
+
+    <div class="cursos-area" id="area-serv">
+      <div class="area-head"><div class="area-ico" style="background:rgba(249,115,22,.1);border-color:rgba(249,115,22,.2)">🏨</div><div><h2>Serviços & Saúde</h2><p>Atendimento, farmácia, hotelaria e turismo</p></div></div>
+      <div class="cursos-grid">
+        <a class="ccard" href="https://wa.me/5565996834279?text=Quero%20informações%20sobre%20Atendente%20de%20Farmácia!" target="_blank"><div class="ccard-top"><span class="ccard-emoji">💊</span><span class="ccard-dur">8 meses</span></div><div class="ccard-nome">Atendente de Farmácia</div><div class="ccard-info"><i class="fas fa-clock"></i> 63h · 5 apostilas · Vendas, atendimento, caixa</div><div class="ccard-cta">Saiba mais <i class="fab fa-whatsapp"></i></div></a>
+        <a class="ccard" href="https://wa.me/5565996834279?text=Quero%20informações%20sobre%20Hotelaria%20e%20Turismo!" target="_blank"><div class="ccard-top"><span class="ccard-emoji">🏨</span><span class="ccard-dur">7 meses</span></div><div class="ccard-nome">Hotelaria e Turismo</div><div class="ccard-info"><i class="fas fa-clock"></i> 56h · 5 apostilas · Recepção, reservas, A&B</div><div class="ccard-cta">Saiba mais <i class="fab fa-whatsapp"></i></div></a>
+      </div>
+    </div>
+
+    <div class="cursos-area" id="area-proj">
+      <div class="area-head"><div class="area-ico" style="background:rgba(99,102,241,.1);border-color:rgba(99,102,241,.2)">📐</div><div><h2>Projetos & Desenho Técnico</h2><p>AutoCAD, SketchUp e modelagem para arquitetura e engenharia</p></div></div>
+      <div class="cursos-grid">
+        <a class="ccard" href="https://wa.me/5565996834279?text=Quero%20informações%20sobre%20AutoCAD%20Arquitetônico!" target="_blank"><div class="ccard-top"><span class="ccard-emoji">🏗️</span><span class="ccard-dur">4 meses</span></div><div class="ccard-nome">AutoCAD – Desenho Arquitetônico</div><div class="ccard-info"><i class="fas fa-clock"></i> 32h · Plantas, cortes, elevações, 3D</div><div class="ccard-cta">Saiba mais <i class="fab fa-whatsapp"></i></div></a>
+        <a class="ccard" href="https://wa.me/5565996834279?text=Quero%20informações%20sobre%20AutoCAD%20Mecânico!" target="_blank"><div class="ccard-top"><span class="ccard-emoji">⚙️</span><span class="ccard-dur">3 meses</span></div><div class="ccard-nome">AutoCAD – Desenho Mecânico</div><div class="ccard-info"><i class="fas fa-clock"></i> 24h · Peças, engrenagens, cotagem</div><div class="ccard-cta">Saiba mais <i class="fab fa-whatsapp"></i></div></a>
+        <a class="ccard" href="https://wa.me/5565996834279?text=Quero%20informações%20sobre%20SketchUp!" target="_blank"><div class="ccard-top"><span class="ccard-emoji">🏠</span><span class="ccard-dur">2 meses</span></div><div class="ccard-nome">SketchUp – Desenho Arquitetônico 3D</div><div class="ccard-info"><i class="fas fa-clock"></i> 12h · Projetos 3D realistas, interiores e fachadas</div><div class="ccard-cta">Saiba mais <i class="fab fa-whatsapp"></i></div></a>
+      </div>
+    </div>
+
+    <div class="cursos-area" id="area-edu">
+      <div class="area-head"><div class="area-ico" style="background:rgba(234,179,8,.1);border-color:rgba(234,179,8,.2)">📚</div><div><h2>Educação & Certificações</h2><p>EJA, certificações técnicas, ENEM e NRs</p></div></div>
+      <div class="cursos-grid">
+        <a class="ccard" href="https://wa.me/5565996834279?text=Quero%20informações%20sobre%20o%20Provão%20EJA!" target="_blank"><div class="ccard-top"><span class="ccard-emoji">🎓</span><span class="ccard-dur">90 dias</span></div><div class="ccard-nome">Provão EJA – Fundamental e Médio</div><div class="ccard-info"><i class="fas fa-clock"></i> Certificado reconhecido pelo MEC · Prova online</div><div class="ccard-cta">Saiba mais <i class="fab fa-whatsapp"></i></div></a>
+        <a class="ccard" href="https://wa.me/5565996834279?text=Quero%20informações%20sobre%20Certificação%20Técnica%20por%20Competência!" target="_blank"><div class="ccard-top"><span class="ccard-emoji">📜</span><span class="ccard-dur">30 dias</span></div><div class="ccard-nome">Certificação Técnica por Competência</div><div class="ccard-info"><i class="fas fa-clock"></i> Diploma técnico via avaliação de experiência</div><div class="ccard-cta">Saiba mais <i class="fab fa-whatsapp"></i></div></a>
+        <a class="ccard" href="https://wa.me/5565996834279?text=Quero%20informações%20sobre%20Redação%20Nota%201000%20no%20ENEM!" target="_blank"><div class="ccard-top"><span class="ccard-emoji">✍️</span><span class="ccard-dur">1 mês</span></div><div class="ccard-nome">Redação Nota 1000 no ENEM</div><div class="ccard-info"><i class="fas fa-clock"></i> 7h · Dissertação, argumentação, coesão</div><div class="ccard-cta">Saiba mais <i class="fab fa-whatsapp"></i></div></a>
+        <a class="ccard" href="https://wa.me/5565996834279?text=Quero%20informações%20sobre%20NRs!" target="_blank"><div class="ccard-top"><span class="ccard-emoji">⚠️</span><span class="ccard-dur">30 dias</span></div><div class="ccard-nome">NRs – Normas Regulamentadoras</div><div class="ccard-info"><i class="fas fa-clock"></i> Segurança do trabalho · Certificado reconhecido</div><div class="ccard-cta">Saiba mais <i class="fab fa-whatsapp"></i></div></a>
+        <a class="ccard" href="https://wa.me/5565996834279?text=Quero%20informações%20sobre%20Matemática%206%20ao%209%20ano!" target="_blank"><div class="ccard-top"><span class="ccard-emoji">🔢</span><span class="ccard-dur">44 meses</span></div><div class="ccard-nome">Matemática 6º ao 9º ano</div><div class="ccard-info"><i class="fas fa-clock"></i> 340h · 24 apostilas · Gamificado</div><div class="ccard-cta">Saiba mais <i class="fab fa-whatsapp"></i></div></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DEPOIMENTOS -->
+<section id="prova">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:.5rem">
+      <div class="eyebrow" style="justify-content:center">Nossos Alunos</div>
+      <h2 class="sec-title">O QUE DIZEM SOBRE <span>A EVOLUA+</span></h2>
+    </div>
+    <div class="prova-grid">
+      <div class="pcard"><div class="pstars">★★★★★</div><p class="ptxt">Fiz o curso de Informática Avançada e consegui meu primeiro emprego logo após receber o certificado. A metodologia é incrível, aprendi de verdade!</p><div class="pauthor"><div class="pavatar" style="background:linear-gradient(135deg,var(--roxo),var(--laranja))">A</div><div><div class="pnome">Ana Paula S.</div><div class="pcurso">Informática Avançada</div></div></div></div>
+      <div class="pcard"><div class="pstars">★★★★★</div><p class="ptxt">O curso de Marketing Digital mudou minha vida profissional. Hoje trabalho como freelancer e tenho uma renda muito maior do que antes.</p><div class="pauthor"><div class="pavatar" style="background:linear-gradient(135deg,var(--ciano),var(--roxo))">R</div><div><div class="pnome">Ricardo M.</div><div class="pcurso">Marketing Digital</div></div></div></div>
+      <div class="pcard"><div class="pstars">★★★★★</div><p class="ptxt">Fiz o EJA e tirei meu certificado em 90 dias. Parecia impossível antes, mas a equipe da Evolua+ me deu todo o suporte necessário!</p><div class="pauthor"><div class="pavatar" style="background:linear-gradient(135deg,var(--pink),var(--laranja))">M</div><div><div class="pnome">Maria José L.</div><div class="pcurso">EJA – Ensino Médio</div></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div id="cta-band">
+  <div class="cta-band-inner">
+    <div class="cta-band-txt">
+      <h2>SEU FUTURO COMEÇA<br>COM A <span>ESCOLHA CERTA</span></h2>
+      <p>Fale agora com nossa equipe. Início imediato, sem pré-requisitos.</p>
+    </div>
+    <div class="cta-band-actions">
+      <a href="https://wa.me/5565996834279?text=Olá!%20Quero%20conhecer%20os%20cursos%20da%20Evolua%2B%20e%20me%20matricular!" target="_blank" class="btn btn-wa"><i class="fab fa-whatsapp"></i> Falar no WhatsApp</a>
+      <a href="#cursos" class="btn btn-outline">Ver Todos os Cursos</a>
+    </div>
+  </div>
+</div>
+
+<!-- CONTATO -->
+<section id="contato">
+  <div class="container">
+    <div class="contato-grid">
+      <div>
+        <div class="eyebrow">Onde Estamos</div>
+        <h2 class="sec-title">ENTRE EM <span>CONTATO</span></h2>
+        <div class="info-blk"><div class="info-label">Endereço</div><div class="info-val">Rua Simão Rodrigues Da Grela, nº 237<br>Bairro Santa Luzia – Mirassol D'Oeste / MT</div></div>
+        <div class="info-blk"><div class="info-label">WhatsApp</div><div class="info-val"><a href="https://wa.me/5565996834279" target="_blank">(65) 9 9683-4279</a></div></div>
+        <div class="info-blk">
+          <div class="info-label">Horário de Funcionamento</div>
+          <table class="horario-tbl">
+            <tr><td>Segunda a Quinta</td><td>08h–11h | 13h–17h</td></tr>
+            <tr><td>Sexta-feira</td><td>08h–11h | 13h–15h</td></tr>
+            <tr><td>Sábado</td><td>08h–11h | 13h–15h</td></tr>
+          </table>
+          <p class="horario-obs">* Sex e Sáb: atendimento alunos do curso de bateria</p>
+        </div>
+        <div class="info-blk"><div class="info-label">Redes Sociais</div>
+          <div class="social-row">
+            <a href="https://www.instagram.com/evoluamaisprofissoesoficial" target="_blank" class="soc ig"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.facebook.com/evoluamaisprofissoesoficial" target="_blank" class="soc fb"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://wa.me/5565996834279" target="_blank" class="soc wa"><i class="fab fa-whatsapp"></i></a>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="map-box"><iframe src="https://maps.google.com/maps?q=Rua+Simão+Rodrigues+Da+Grela,237,Santa+Luzia,Mirassol+D%27Oeste,MT&output=embed&z=16" allowfullscreen loading="lazy"></iframe></div>
+        <div class="map-footer">
+          <p>Rua Simão Rodrigues Da Grela, nº 237, Bairro Santa Luzia – Mirassol D'Oeste / MT. Fácil acesso, próximo ao centro.</p>
+          <a href="https://maps.google.com/?q=Rua+Simão+Rodrigues+Da+Grela,237,Mirassol+D'Oeste,MT" target="_blank"><i class="fas fa-directions"></i> Abrir no Google Maps</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img src="uniforme_3307_x_4252_px_.png" alt="Evolua+" class="footer-logo" onerror="this.style.display='none'">
+        <p>Educação que Transforma. Formando profissionais qualificados desde 2021 em Mirassol D'Oeste – MT.</p>
+        <div class="social-row" style="margin-top:1.25rem">
+          <a href="https://www.instagram.com/evoluamaisprofissoesoficial" target="_blank" class="soc ig"><i class="fab fa-instagram"></i></a>
+          <a href="https://www.facebook.com/evoluamaisprofissoesoficial" target="_blank" class="soc fb"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://wa.me/5565996834279" target="_blank" class="soc wa"><i class="fab fa-whatsapp"></i></a>
+        </div>
+      </div>
+      <div class="footer-col"><h4>Navegação</h4><ul><li><a href="#sobre">Sobre Nós</a></li><li><a href="#cursos">Nossos Cursos</a></li><li><a href="#diferenciais">Diferenciais</a></li><li><a href="#contato">Contato</a></li></ul></div>
+      <div class="footer-col"><h4>Áreas</h4><ul><li><a href="#cursos" onclick="showArea('tec')">Tecnologia</a></li><li><a href="#cursos" onclick="showArea('prog')">Programação</a></li><li><a href="#cursos" onclick="showArea('ia')">Inteligência Artificial</a></li><li><a href="#cursos" onclick="showArea('adm')">Administração</a></li><li><a href="#cursos" onclick="showArea('design')">Design & Criação</a></li></ul></div>
+      <div class="footer-col"><h4>Contato</h4><ul><li><a href="https://wa.me/5565996834279" target="_blank">📱 (65) 9 9683-4279</a></li><li><a href="#">📍 Mirassol D'Oeste – MT</a></li><li><a href="https://instagram.com/evoluamaisprofissoesoficial" target="_blank">📸 @evoluamaisprofissoesoficial</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 <span>Evolua+ Profissões</span>. Todos os direitos reservados. Licenciado <span>Evolua Educação</span>.</p>
+      <p>Desenvolvido com ❤️ em <span>Mirassol D'Oeste – MT</span></p>
+    </div>
+  </div>
+</footer>
+
+<a href="https://wa.me/5565996834279?text=Olá!%20Quero%20conhecer%20os%20cursos%20da%20Evolua%2B%20Profissões!" target="_blank" class="wa-float" title="Falar no WhatsApp"><i class="fab fa-whatsapp"></i></a>
+
+<script>
+// TICKER
+const ITEMS=['💻 Tecnologia & Informática','🤖 Inteligência Artificial','🎨 Design Gráfico','📊 Gestão Empresarial','🌐 Desenvolvedor Web','📱 Apps Mobile','🏆 Certificado Reconhecido','🎓 +1000 Alunos Formados','🚀 Início Imediato','🌾 Agronegócio','📐 AutoCAD & SketchUp','📚 EJA e Certificações','⭐ Educação que Transforma'];
+const t=document.getElementById('ticker');
+const s=ITEMS.map(i=>`<span class="ticker-item"><span class="ticker-dot"></span>${i}</span>`).join('');
+t.innerHTML=s+s;
+
+// SLIDER
+let cur=0;
+const slides=document.querySelectorAll('.slide');
+const dots=document.querySelectorAll('.hdot');
+const track=document.getElementById('track');
+let auto;
+function gSlide(n){slides[cur].classList.remove('active');dots[cur].classList.remove('active');cur=(n+slides.length)%slides.length;slides[cur].classList.add('active');dots[cur].classList.add('active');track.style.transform=`translateX(-${cur*100}%)`}
+function dSlide(d){gSlide(cur+d);reset()}
+function reset(){clearInterval(auto);auto=setInterval(()=>gSlide(cur+1),5500)}
+reset();
+
+// TABS
+const AREAS=['tec','prog','design','ia','adm','agro','serv','proj','edu'];
+function showArea(id){
+  document.querySelectorAll('.cursos-area').forEach(a=>a.classList.remove('active'));
+  document.querySelectorAll('.atab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('area-'+id).classList.add('active');
+  const idx=AREAS.indexOf(id);
+  if(idx>=0)document.querySelectorAll('.atab')[idx].classList.add('active');
+}
+
+// MOBILE MENU
+function toggleMob(){document.getElementById('mobMenu').classList.toggle('open')}
+document.addEventListener('click',e=>{if(!e.target.closest('nav')&&!e.target.closest('#mobMenu'))document.getElementById('mobMenu').classList.remove('open')});
+
+// SCROLL REVEAL
+const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.style.opacity='1';e.target.style.transform='translateY(0)'}})},{threshold:.08});
+document.querySelectorAll('.dif-card,.ccard,.pcard,.snum,.stat-card').forEach(el=>{el.style.opacity='0';el.style.transform='translateY(16px)';el.style.transition='opacity .45s ease, transform .45s ease';obs.observe(el)});
+</script>
+</body>
+</html>
